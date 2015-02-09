@@ -10,6 +10,15 @@ A Simple Tool and Python-Module for Documenting YAML Files.
 :Licence:   GNU General Public Licence v3 or later (GPLv3+)
 
 
+This tool allows you writing documentation directly into YAML-files as
+comments. These comments will then be converted to text and the YAML-code
+goes into literal blocks.
+
+This is some kind of `literate programming`, except that you do not
+write code into your text, but text into your code. This difference
+allows to process the YAML file directly without any pre-processing.
+
+
 Usage::
 
   yaml2rst [-h] infile outfile
