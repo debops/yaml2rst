@@ -31,7 +31,8 @@ def convert(lines):
     state = STATE_TEXT
     last_text_line = ''
     for line in lines:
-        if line.startswith('# '):
+        line = line.rstrip()
+        if line.startswith('# ') or line == '#':
             if state != STATE_TEXT:
                 yield ''
             line = last_text_line = line[2:]
