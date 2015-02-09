@@ -32,22 +32,24 @@ import yaml2rst
 import argparse
 import sys
 
-def main(infile, outfile):
-    if infile == '-':
+def main(infilename, outfilename):
+    if infilename == '-':
         infh = sys.stdin
     else:
-        infh = open(infile)
-    if outfile == '-':
+        infh = open(infilename)
+    if outfilename == '-':
         outfh = sys.stdout
     else:
-        outfh = open(outfile)
-    for l in yaml2rst.convert(infh.splitlines()):
-        print(l, file=outfh)
+        outfh = open(outfilename, "w")
+    for l in yaml2rst.convert(infh.readlines()):
+        print(l.rstrip(), file=outfh)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('infilename', metavar='infile')
-parser.add_argument('outfilename', metavar='outfile')
-args = parser.parse_args
+parser.add_argument('infilename', metavar='infile',
+                    help="YAML-file to read (`-` for stdin)")
+parser.add_argument('outfilename', metavar='outfile',
+                    help="rst-file to write (`-` for stdout)")
+args = parser.parse_args()
 main(**vars(args))
 
