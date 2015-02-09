@@ -43,6 +43,15 @@ class Test(TestCase):
         expected = ['::', '', '  key: value']
         self._test(text, expected)
 
+
+    def test_only_text(self):
+        text = """\
+        # Some text
+        """
+        expected = ['Some text']
+        self._test(text, expected)
+
+
     def test_some_text_behind(self):
         text = """\
         ---
@@ -83,4 +92,38 @@ class Test(TestCase):
 
           key: value
         """
+        self._test(text, expected)
+
+    def test_empty_text_line(self):
+        text = """\
+        ---
+        #
+        key: value
+        """
+        expected = """\
+
+        ::
+
+          key: value
+        """
+        self._test(text, expected)
+
+    def test_empty_text_line2(self):
+        text = """\
+        #
+        key: value
+        """
+        expected = """\
+
+        ::
+
+          key: value
+        """
+        self._test(text, expected)
+
+    def test_empty_text_line3(self):
+        text = """\
+        #
+        """
+        expected = ['']
         self._test(text, expected)
