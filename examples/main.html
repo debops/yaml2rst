@@ -108,20 +108,26 @@ disk: |
 <p>The default configuration for each plugin is as follows</p>
 <pre class="literal-block">
 collectd_plugins_default_config:
-  apache:
-  df: |
-    MountPoint &quot;/boot&quot;
-    IgnoreSelected true
-    ReportByDevice false
-    ReportReserved false
-    ReportInodes false
-  disk: |
-    Disk &quot;/sd[0-9]+/&quot;
-    Disk &quot;/mmcblk[0-9]+/&quot;
-    IgnoreSelected false
-  interface: |
-    Interface &quot;lo&quot;
-    IgnoreSelected true
+</pre>
+<p>By default all paritions except <tt class="docutils literal">/boot</tt> are monitored.</p>
+<pre class="literal-block">
+df: |
+  MountPoint &quot;/boot&quot;
+  IgnoreSelected true
+  ReportByDevice false
+  ReportReserved false
+  ReportInodes false
+</pre>
+<p>By default only <tt class="docutils literal">sd</tt>-hard-disks and memory-cards are
+monitored.</p>
+<pre class="literal-block">
+disk: |
+  Disk &quot;/sd[0-9]+/&quot;
+  Disk &quot;/mmcblk[0-9]+/&quot;
+  IgnoreSelected false
+interface: |
+  Interface &quot;lo&quot;
+  IgnoreSelected true
 </pre>
 <!-- Local Variables:
 mode: rst

@@ -75,13 +75,21 @@ The default configuration for each plugin is as follows
 
 
   collectd_plugins_default_config:
-    apache:
+
+By default all paritions except ``/boot`` are monitored.
+::
+
     df: |
       MountPoint "/boot"
       IgnoreSelected true
       ReportByDevice false
       ReportReserved false
       ReportInodes false
+
+By default only ``sd``-hard-disks and memory-cards are
+monitored.
+::
+
     disk: |
       Disk "/sd[0-9]+/"
       Disk "/mmcblk[0-9]+/"
