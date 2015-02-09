@@ -40,6 +40,12 @@ h1, h2, h3, h4, h5, h6 {
     padding: 3px 0 3px 20px;
 }
 
+tt {
+    background-color: #ecf0f3;
+    font-size: 0.95em;
+    padding: 0 1px;
+}
+
 </style>
 </head>
 <body>
@@ -68,8 +74,8 @@ collectd_host_plugins: {}
 <pre class="literal-block">
 memory: False
 </pre>
-<p>To activate a plugin with it's default configuration (see
-<tt class="docutils literal">collectd_plugins_default_config</tt> below), simply list the plugin-name
+<p>To activate a plugin with it's default configuration (see</p>
+<p><tt class="docutils literal">collectd_plugins_default_config</tt> below), simply list the plugin-name
 or set it's value to <cite>True</cite>:</p>
 <pre class="literal-block">
 interface:
@@ -125,6 +131,7 @@ disk: |
   Disk &quot;/sd[0-9]+/&quot;
   Disk &quot;/mmcblk[0-9]+/&quot;
   IgnoreSelected false
+
 interface: |
   Interface &quot;lo&quot;
   IgnoreSelected true

@@ -32,6 +32,7 @@ To disable a plugin, set it's value to `False`::
      memory: False
 
 To activate a plugin with it's default configuration (see
+
 ``collectd_plugins_default_config`` below), simply list the plugin-name
 or set it's value to `True`::
 
@@ -71,8 +72,8 @@ Default Configuration
 
 The default configuration for each plugin is as follows
 
-::
 
+::
 
   collectd_plugins_default_config:
 
@@ -94,6 +95,7 @@ monitored.
       Disk "/sd[0-9]+/"
       Disk "/mmcblk[0-9]+/"
       IgnoreSelected false
+
     interface: |
       Interface "lo"
       IgnoreSelected true

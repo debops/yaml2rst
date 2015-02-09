@@ -127,3 +127,27 @@ class Test(TestCase):
         """
         expected = ['']
         self._test(text, expected)
+
+    def test_empty_line_keeps_state1(self):
+        text = """\
+        # Some Text
+
+        # More Text
+        """
+        expected = ['Some Text', '', 'More Text']
+        self._test(text, expected)
+
+    def test_empty_line_keeps_state2(self):
+        text = """\
+        this is code
+
+        More code
+        """
+        expected= """\
+        ::
+
+          this is code
+
+          More code
+        """
+        self._test(text, expected)

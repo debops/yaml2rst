@@ -32,7 +32,10 @@ def convert(lines):
     last_text_line = ''
     for line in lines:
         line = line.rstrip()
-        if line.startswith('# ') or line == '#':
+        if not line:
+            # do not change state if the line is empty
+            yield ''
+        elif line.startswith('# ') or line == '#':
             if state != STATE_TEXT:
                 yield ''
             line = last_text_line = line[2:]

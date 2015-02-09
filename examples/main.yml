@@ -27,6 +27,7 @@ collectd_host_plugins: {}
 #      memory: False
 #
 # To activate a plugin with it's default configuration (see
+
 # ``collectd_plugins_default_config`` below), simply list the plugin-name
 # or set it's value to `True`::
 #
@@ -81,6 +82,7 @@ collectd_plugins_default_config:
     Disk "/sd[0-9]+/"
     Disk "/mmcblk[0-9]+/"
     IgnoreSelected false
+
   interface: |
     Interface "lo"
     IgnoreSelected true
