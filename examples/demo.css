@@ -12,7 +12,9 @@ pre {
     border-width: 1px medium;
     color: #333333;
     line-height: 120%;
+    margin-left: 2em;
     padding: 5px;
+    width: 50%;
 }
 
 h1 { font-size: 200%; margin-top: 0; }
