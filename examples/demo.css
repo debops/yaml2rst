@@ -30,3 +30,9 @@ h1, h2, h3, h4, h5, h6 {
     margin: 20px -20px 10px;
     padding: 3px 0 3px 20px;
 }
+
+tt {
+    background-color: #ecf0f3;
+    font-size: 0.95em;
+    padding: 0 1px;
+}
