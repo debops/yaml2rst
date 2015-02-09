@@ -4,8 +4,6 @@ from setuptools import setup, find_packages
 
 from yaml2rst import __version__
 
-packages = find_packages()
-
 long_description = "\n\n".join([
     open("README.txt").read(),
     ])
@@ -18,8 +16,8 @@ setup(
     author="Hartmut Goebel",
     author_email='h.goebel@crazy-compilers.com',
     license="GPLv3+",
-    packages=packages,
-    scripts=['bin/yml2rst'],
+    py_modules = ['yaml2rst'],
+    scripts=['bin/yaml2rst'],
     #url="",
     #download_url='http://yml2rst-%s.tar.gz' % __version__,
     keywords=['YML', 'rst', 'reStructuresText'],
