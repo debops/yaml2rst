@@ -21,6 +21,11 @@ Usage::
   optional arguments:
     -h, --help  show this help message and exit
 
+
+You can find example yaml-input, rst-output and generated html in the
+examples directory. You may also view the generated html online at
+https://rawgit.com/htgoebel/yaml2rst/develop/examples/main.html.
+
 ..
  Local Variables:
  mode: rst
