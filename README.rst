@@ -34,10 +34,10 @@ Usage::
 How it works
 ----------------
 
-This script takes all lines beginning with ``# `` (and lines
+This script takes all lines beginning with :literal:`#\ ` (and lines
 consisting of only a ``#``) as text-lines. Everything else will be
-treated as "code". The text-lines will get the ``# `` removed and the
-"code" will get spaces prepended.
+treated as "code". The text-lines will get the :literal:`#\ ` removed
+and the "code" will get spaces prepended.
 
 Additionally at the start and at the end of a "code"-block, lines are
 added as required by reStructuredText. Also at the begin of a
