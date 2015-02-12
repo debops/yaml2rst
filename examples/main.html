@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>collectd</title>
+<style type="text/css">
+
+/* Layout shamelessly ripped out from https://docs.python.org/2/ */
+
+pre {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #eeffcc;
+    border-color: #ac9 -moz-use-text-color;
+    border-image: none;
+    border-style: solid none;
+    border-width: 1px medium;
+    color: #333333;
+    line-height: 120%;
+    padding: 5px;
+}
+
+h1 { font-size: 200%; margin-top: 0; }
+h2 { font-size: 160%; }
+h3 { font-size: 140%; }
+
+h1.title { text-align: center ; font-weight: bold; }
+
+h1, h2, h3, h4, h5, h6 {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    color: #20435c;
+    font-family: sans-serif;
+    font-weight: normal;
+    margin: 20px -20px 10px;
+    padding: 3px 0 3px 20px;
+}
+
+tt {
+    background-color: #ecf0f3;
+    font-size: 0.95em;
+    padding: 0 1px;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="collectd">
+<h1 class="title">collectd</h1>
+
+<p>Set this to <tt class="docutils literal">true</tt> to install <cite>collectd</cite>:</p>
+<pre class="literal-block">
+collectd: false
+</pre>
+<p>&quot;Global&quot; options are defined like this:</p>
+<pre class="literal-block">
+collectd_FQDNLookup: 'true'
+</pre>
+<p>The list of plugins to enable are defined in these variables. As
+usual for DebOps, there are variables for global, per-group and
+per-host settings:</p>
+<pre class="literal-block">
+collectd_default_plugins:
+  load:
+  memory:
+collectd_group_plugins: {}
+collectd_host_plugins: {}
+</pre>
+<p>To disable a plugin, set it's value to <cite>False</cite>:</p>
+<pre class="literal-block">
+memory: False
+</pre>
+<p>To activate a plugin with it's default configuration (see</p>
+<p><tt class="docutils literal">collectd_plugins_default_config</tt> below), simply list the plugin-name
+or set it's value to <cite>True</cite>:</p>
+<pre class="literal-block">
+interface:
+df: True
+enabled_plugin_without_args:
+</pre>
+<p>To deactivate a plugin for a host or group, set it's value to
+<cite>False</cite>:</p>
+<pre class="literal-block">
+memory: False
+disabled_plugin: False
+</pre>
+<p>To set the config (resp. overwrite the default config) of a plugin,
+just add the values in whatever style you like:</p>
+<pre class="literal-block">
+config_as_dict:
+  foo: 1
+  bar: 2
+config_as_string: Limit 1mb
+config_as_multiline_string: |
+  MountPoint &quot;/boot&quot;
+  IgnoreSelected true
+  ReportByDevice false
+config_as_list:
+  - asdfasd
+  - asdfasd
+</pre>
+<p>You can even reuse the default config like this:</p>
+<pre class="literal-block">
+disk: |
+  {{ collectd_plugins_default_config['disk'] }}
+  Disk &quot;/hd[0-9]+/&quot;
+</pre>
+<div class="section" id="default-configuration">
+<h1>Default Configuration</h1>
+<p>The default configuration for each plugin is as follows</p>
+<pre class="literal-block">
+collectd_plugins_default_config:
+</pre>
+<p>By default all paritions except <tt class="docutils literal">/boot</tt> are monitored.</p>
+<pre class="literal-block">
+df: |
+  MountPoint &quot;/boot&quot;
+  IgnoreSelected true
+  ReportByDevice false
+  ReportReserved false
+  ReportInodes false
+</pre>
+<p>By default only <tt class="docutils literal">sd</tt>-hard-disks and memory-cards are
+monitored.</p>
+<pre class="literal-block">
+disk: |
+  Disk &quot;/sd[0-9]+/&quot;
+  Disk &quot;/mmcblk[0-9]+/&quot;
+  IgnoreSelected false
+
+interface: |
+  Interface &quot;lo&quot;
+  IgnoreSelected true
+</pre>
+<!-- Local Variables:
+mode: rst
+ispell-local-dictionary: "american"
+End: -->
+</div>
+</div>
+</body>
+</html>
