@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 from yaml2rst import __version__
 
 long_description = "\n\n".join([
-    open("README.txt").read(),
+    open("README.rst").read(),
     ])
 
 setup(
