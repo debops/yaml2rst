@@ -2,7 +2,7 @@
 yaml2rst
 ==========================
 --------------------------------------------------------------------------
-A Simple Tool and Python-Module for Documenting YAML Files.
+A Simple Tool and Python-Module for Documenting YAML Files
 --------------------------------------------------------------------------
 
 :Author:    Hartmut Goebel <h.goebel@crazy-compilers.com>
