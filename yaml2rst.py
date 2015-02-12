@@ -56,3 +56,9 @@ def convert(lines):
 def convert_text(yaml_text):
     return '\n'.join(convert(yaml_text.splitlines()))
     
+
+def convert_file(infilename, outfilename):
+    with open(infilename) as infh:
+        with open(outfilename, "w") as outfh:
+            for l in convert(infh.readlines()):
+                print(l.rstrip(), file=outfh)
