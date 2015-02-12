@@ -19,6 +19,8 @@ yaml2rst – A Simple Tool for Documenting YAML Files
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import print_function
+
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __copyright__ = "Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __licence__ = "GNU General Public License version 3 (GPL v3)"
