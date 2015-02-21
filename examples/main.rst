@@ -101,6 +101,35 @@ monitored.
       IgnoreSelected true
 
 
+
+Indention of Literal Blocks behind Lists
+-----------------------------------------
+
+Code will properly be indented after lists:
+
+- list-entry 1
+- list-entry 2
+  ::
+
+    Some code under list-entry 2
+
+
+If you want to de-indent, simple add a the two colons (``::``)
+(signifying that the following text blocks comprise a literal block)
+at the intended
+indention-level. Of course, to make this valid rST, you need to add
+an empty line in front of that.
+
+- list-entry 1
+- list-entry 2
+
+::
+
+  Some code under list-entry 2
+
+
+
+
 ..
   Local Variables:
   mode: rst

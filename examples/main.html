@@ -135,6 +135,31 @@ interface: |
   Interface &quot;lo&quot;
   IgnoreSelected true
 </pre>
+</div>
+<div class="section" id="indention-of-literal-blocks-behind-lists">
+<h1>Indention of Literal Blocks behind Lists</h1>
+<p>Code will properly be indented after lists:</p>
+<ul>
+<li><p class="first">list-entry 1</p>
+</li>
+<li><p class="first">list-entry 2</p>
+<pre class="literal-block">
+Some code under list-entry 2
+</pre>
+</li>
+</ul>
+<p>If you want to de-indent, simple add a the two colons (<tt class="docutils literal">::</tt>)
+(signifying that the following text blocks comprise a literal block)
+at the intended
+indention-level. Of course, to make this valid rST, you need to add
+an empty line in front of that.</p>
+<ul class="simple">
+<li>list-entry 1</li>
+<li>list-entry 2</li>
+</ul>
+<pre class="literal-block">
+Some code under list-entry 2
+</pre>
 <!-- Local Variables:
 mode: rst
 ispell-local-dictionary: "american"
