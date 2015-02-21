@@ -151,3 +151,46 @@ class Test(TestCase):
           More code
         """
         self._test(text, expected)
+
+
+    def test_more_indent(self):
+        text = """\
+        # Some text
+        #
+        # - list-entry 1
+        # - list-entry 2
+        Some code under list-entry 1
+        """
+        expected= """\
+        Some text
+
+        - list-entry 1
+        - list-entry 2
+          ::
+
+            Some code under list-entry 1
+        """
+        self._test(text, expected)
+
+
+    def test_no_more_indent(self):
+        text = """\
+        # Some text
+        #
+        # - list-entry 1
+        # - list-entry 2
+        #
+        # ::
+        Some code at outer level
+        """
+        expected= """\
+        Some text
+
+        - list-entry 1
+        - list-entry 2
+
+        ::
+
+          Some code at outer level
+        """
+        self._test(text, expected)
