@@ -49,7 +49,7 @@ def convert(lines):
             if line.startswith('---'):
                 line = line[3:]
             if state != STATE_YAML:
-                if not last_text_line.strip().endswith('::'):
+                if not last_text_line.endswith('::'):
                     yield '::'
                 yield ''
             yield '  ' + line
