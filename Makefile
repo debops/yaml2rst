@@ -55,3 +55,4 @@ examples:
 	PYTHONPATH=.
 	bin/yaml2rst examples/main.yml examples/main.rst
 	rst2html --stylesheet=examples/demo.css examples/main.rst > examples/main.html
+	rst2html --stylesheet=examples/demo.css tests/patternsTest.rst > tests/patternsTest.html
