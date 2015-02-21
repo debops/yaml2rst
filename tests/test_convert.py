@@ -185,7 +185,7 @@ class Test(TestCase):
         #
         # - list-entry 1
         # - list-entry 2
-        Some code under list-entry 1
+        Some code under list-entry 2
         """
         expected= """\
         Some text
@@ -194,7 +194,7 @@ class Test(TestCase):
         - list-entry 2
           ::
 
-            Some code under list-entry 1
+            Some code under list-entry 2
         """
         self._test(text, expected)
 
