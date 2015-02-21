@@ -129,6 +129,25 @@ an empty line in front of that.
 
 
 
+Formatting as Definition Lists
+-----------------------------------------
+
+
+postfix_relayhost
+   Address of mail host this host should relay all mail to instead of
+   delivering it directly. (Automatic configuration)
+
+   This allows multiple paragraphs, too.
+
+   a) and list items 1
+   b) and list items 2
+
+   ::
+
+     postfix_relayhost: False
+
+
+
 
 ..
   Local Variables:

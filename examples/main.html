@@ -45,6 +45,10 @@ tt {
     padding: 0 1px;
 }
 
+dt {
+    font-weight: bold;
+}
+
 </style>
 </head>
 <body>
@@ -160,6 +164,23 @@ an empty line in front of that.</p>
 <pre class="literal-block">
 Some code under list-entry 2
 </pre>
+</div>
+<div class="section" id="formatting-as-definition-lists">
+<h1>Formatting as Definition Lists</h1>
+<dl class="docutils">
+<dt>postfix_relayhost</dt>
+<dd><p class="first">Address of mail host this host should relay all mail to instead of
+delivering it directly. (Automatic configuration)</p>
+<p>This allows multiple paragraphs, too.</p>
+<ol class="loweralpha simple">
+<li>and list items 1</li>
+<li>and list items 2</li>
+</ol>
+<pre class="last literal-block">
+postfix_relayhost: False
+</pre>
+</dd>
+</dl>
 <!-- Local Variables:
 mode: rst
 ispell-local-dictionary: "american"
