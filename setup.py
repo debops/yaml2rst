@@ -30,7 +30,6 @@ setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2 :: Only',
-        'Topic :: Documentation :: Sphinx',
-        'Topic :: Documentation :: Sphinx',
+        'Topic :: Software Development :: Documentation',
     ],
 )
