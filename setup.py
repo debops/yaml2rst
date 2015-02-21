@@ -20,7 +20,7 @@ setup(
     scripts=['bin/yaml2rst'],
     #url="",
     #download_url='http://yml2rst-%s.tar.gz' % __version__,
-    keywords=['YML', 'rst', 'reStructuresText', 'literate programming'],
+    keywords=['YML', 'YAML', 'rst', 'reStructuresText', 'literate programming'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
