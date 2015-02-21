@@ -16,6 +16,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import print_function
+
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __copyright__ = "Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __licence__ = "GNU General Public License version 3 (GPL v3)"
@@ -23,15 +25,35 @@ __licence__ = "GNU General Public License version 3 (GPL v3)"
 
 from unittest import TestCase
 import textwrap
+import os
 
 import yaml2rst
 
 class Test(TestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        cls._outfile = open(os.path.join(os.path.dirname(__file__),
+                                         'patterns%s.rst' % cls.__name__), 'w')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._outfile.close()
+
+    def _write_pattern(self, *lines):
+        """
+        Write the expected pattern into a file to be able to (manually)
+        verify the expected rst-code is valid and behaves as intented.
+        """
+        print(file=self._outfile)
+        for line in lines:
+            print(line, file=self._outfile)
+
     def _test(self, text, expected):
         text = textwrap.dedent(text)
         if isinstance(expected, basestring):
             expected = textwrap.dedent(expected).splitlines()
+        self._write_pattern(*expected)
         res = list(yaml2rst.convert(text.splitlines()))
         self.assertListEqual(expected, res)
     
