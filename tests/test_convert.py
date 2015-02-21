@@ -199,6 +199,25 @@ class Test(TestCase):
         self._test(text, expected)
 
 
+    def test_more_indent_enumeration(self):
+        text = """\
+        # Some text
+        #
+        # 1. list-entry 1
+        # 2. list-entry 2
+        Some code under list-entry 2
+        """
+        expected= """\
+        Some text
+
+        1. list-entry 1
+        2. list-entry 2
+           ::
+
+             Some code under list-entry 2
+        """
+        self._test(text, expected)
+
     def test_no_more_indent(self):
         text = """\
         # Some text
