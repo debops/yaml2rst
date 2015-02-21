@@ -26,6 +26,7 @@ __licence__ = "GNU General Public License version 3 (GPL v3)"
 from unittest import TestCase
 import textwrap
 import os
+import inspect
 
 import yaml2rst
 
@@ -46,8 +47,11 @@ class Test(TestCase):
         verify the expected rst-code is valid and behaves as intented.
         """
         print(file=self._outfile)
+        print(inspect.stack()[2][3], file=self._outfile)
+        print('='*60, file=self._outfile)
         for line in lines:
             print(line, file=self._outfile)
+        print(file=self._outfile)
 
     def _test(self, text, expected):
         text = textwrap.dedent(text)
