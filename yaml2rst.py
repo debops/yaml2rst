@@ -21,17 +21,78 @@ yaml2rst – A Simple Tool for Documenting YAML Files
 
 from __future__ import print_function
 
+import re
+
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __copyright__ = "Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __licence__ = "GNU General Public License version 3 (GPL v3)"
-__version__ = "0.1"
+__version__ = "0.2"
 
 STATE_TEXT = 0
 STATE_YAML = 1
 
+
+def setup_patterns():
+
+    # Create rst patterns, copied from `docutils/parsers/rst/states.py`
+    # Function has been placed in the public domain.
+
+    class Struct:
+        """Stores data attributes for dotted-attribute access."""
+        def __init__(self, **keywordargs):
+            self.__dict__.update(keywordargs)
+
+    enum = Struct()
+    enum.formatinfo = {
+          'parens': Struct(prefix='(', suffix=')', start=1, end=-1),
+          'rparen': Struct(prefix='', suffix=')', start=0, end=-1),
+          'period': Struct(prefix='', suffix='.', start=0, end=-1)}
+    enum.formats = enum.formatinfo.keys()
+    enum.sequences = ['arabic', 'loweralpha', 'upperalpha',
+                      'lowerroman', 'upperroman'] # ORDERED!
+    enum.sequencepats = {'arabic': '[0-9]+',
+                         'loweralpha': '[a-z]',
+                         'upperalpha': '[A-Z]',
+                         'lowerroman': '[ivxlcdm]+',
+                         'upperroman': '[IVXLCDM]+',}
+
+    pats = {}
+    pats['nonalphanum7bit'] = '[!-/:-@[-`{-~]'
+    pats['alpha'] = '[a-zA-Z]'
+    pats['alphanum'] = '[a-zA-Z0-9]'
+    pats['alphanumplus'] = '[a-zA-Z0-9_-]'
+    pats['enum'] = ('(%(arabic)s|%(loweralpha)s|%(upperalpha)s|%(lowerroman)s'
+                    '|%(upperroman)s|#)' % enum.sequencepats)
+
+    for format in enum.formats:
+        pats[format] = '(?P<%s>%s%s%s)' % (
+              format, re.escape(enum.formatinfo[format].prefix),
+              pats['enum'], re.escape(enum.formatinfo[format].suffix))
+
+    patterns = {
+          'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
+          'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
+          }
+    for name, pat in patterns.items():
+        patterns[name] = re.compile(pat)
+    return patterns
+
+
+PATTERNS = setup_patterns()
+
+def get_indent(line):
+    stripped_line = line.lstrip()
+    indent = len(line) - len(stripped_line)
+    if (PATTERNS['bullet'].match(stripped_line) or
+        PATTERNS['enumerator'].match(stripped_line)):
+        indent += len(stripped_line.split(None, 1)[0])+1
+    return indent
+
+
 def convert(lines):
     state = STATE_TEXT
     last_text_line = ''
+    last_indent = ''
     for line in lines:
         line = line.rstrip()
         if not line:
@@ -42,6 +103,7 @@ def convert(lines):
                 yield ''
             line = last_text_line = line[2:]
             yield line
+            last_indent = get_indent(line)* ' '
             state = STATE_TEXT
         elif line == '---':
             pass
@@ -49,10 +111,10 @@ def convert(lines):
             if line.startswith('---'):
                 line = line[3:]
             if state != STATE_YAML:
-                if not last_text_line.strip().endswith('::'):
-                    yield '::'
+                if not last_text_line.endswith('::'):
+                    yield last_indent + '::'
                 yield ''
-            yield '  ' + line
+            yield last_indent + '  ' + line
             state = STATE_YAML
 
 def convert_text(yaml_text):

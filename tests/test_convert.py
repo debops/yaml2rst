@@ -16,6 +16,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import print_function
+
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __copyright__ = "Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __licence__ = "GNU General Public License version 3 (GPL v3)"
@@ -23,15 +25,39 @@ __licence__ = "GNU General Public License version 3 (GPL v3)"
 
 from unittest import TestCase
 import textwrap
+import os
+import inspect
 
 import yaml2rst
 
 class Test(TestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        cls._outfile = open(os.path.join(os.path.dirname(__file__),
+                                         'patterns%s.rst' % cls.__name__), 'w')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._outfile.close()
+
+    def _write_pattern(self, *lines):
+        """
+        Write the expected pattern into a file to be able to (manually)
+        verify the expected rst-code is valid and behaves as intented.
+        """
+        print(file=self._outfile)
+        print(inspect.stack()[2][3], file=self._outfile)
+        print('='*60, file=self._outfile)
+        for line in lines:
+            print(line, file=self._outfile)
+        print(file=self._outfile)
+
     def _test(self, text, expected):
         text = textwrap.dedent(text)
         if isinstance(expected, basestring):
             expected = textwrap.dedent(expected).splitlines()
+        self._write_pattern(*expected)
         res = list(yaml2rst.convert(text.splitlines()))
         self.assertListEqual(expected, res)
     
@@ -149,5 +175,48 @@ class Test(TestCase):
           this is code
 
           More code
+        """
+        self._test(text, expected)
+
+
+    def test_more_indent(self):
+        text = """\
+        # Some text
+        #
+        # - list-entry 1
+        # - list-entry 2
+        Some code under list-entry 2
+        """
+        expected= """\
+        Some text
+
+        - list-entry 1
+        - list-entry 2
+          ::
+
+            Some code under list-entry 2
+        """
+        self._test(text, expected)
+
+
+    def test_no_more_indent(self):
+        text = """\
+        # Some text
+        #
+        # - list-entry 1
+        # - list-entry 2
+        #
+        # ::
+        Some code at outer level
+        """
+        expected= """\
+        Some text
+
+        - list-entry 1
+        - list-entry 2
+
+        ::
+
+          Some code at outer level
         """
         self._test(text, expected)

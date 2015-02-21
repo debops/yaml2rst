@@ -9,7 +9,7 @@
 .PHONY : all clean celan-files clean-all clean-tox
 .PHONY : xunit-test test test-dist cover
 .PHONY : dump-requirements install-requirements
-.PHONY : dist examples
+.PHONY : dist examples test-upload test-install
 
 all: cover
 
@@ -55,3 +55,14 @@ examples:
 	PYTHONPATH=.
 	bin/yaml2rst examples/main.yml examples/main.rst
 	rst2html --stylesheet=examples/demo.css examples/main.rst > examples/main.html
+	rst2html --stylesheet=examples/demo.css tests/patternsTest.rst > tests/patternsTest.html
+
+#-- interaction with PyPI
+
+test-upload:
+	python ./setup.py register -r https://testpypi.python.org/pypi
+	python ./setup.py sdist upload -r https://testpypi.python.org/pypi
+
+test-install:
+	virtualenv /tmp/test-yaml2rst
+	/tmp/test-yaml2rst/bin/pip install -i https://testpypi.python.org/pypi yaml2rst
