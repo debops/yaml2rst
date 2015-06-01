@@ -46,7 +46,7 @@ install-requirements:
 	pip install -r .requirements
 
 dist:
-#	ensure a clean build
+	@# ensure a clean build
 	rm -rf build
 	python setup.py sdist bdist
 
@@ -59,10 +59,14 @@ examples:
 
 #-- interaction with PyPI
 
-test-upload:
+test-upload dist:
 	python ./setup.py register -r https://testpypi.python.org/pypi
 	python ./setup.py sdist upload -r https://testpypi.python.org/pypi
 
 test-install:
 	virtualenv /tmp/test-yaml2rst
 	/tmp/test-yaml2rst/bin/pip install -i https://testpypi.python.org/pypi yaml2rst
+
+upload: dist
+	python ./setup.py register
+	python ./setup.py sdist upload
