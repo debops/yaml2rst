@@ -239,3 +239,29 @@ class Test(TestCase):
           Some code at outer level
         """
         self._test(text, expected)
+
+    def test_nested_enumeration(self):
+        # Check if unindenting works as expected.
+        text = """\
+        # Some text
+        #
+        # 1. list-entry 1
+        #    a. list-entry 1.a
+        #    b. list-entry 1.b
+        # 2. list-entry 2
+
+        Some code under list-entry 2
+        """
+        expected= """\
+        Some text
+
+        1. list-entry 1
+           a. list-entry 1.a
+           b. list-entry 1.b
+        2. list-entry 2
+
+           ::
+
+             Some code under list-entry 2
+        """
+        self._test(text, expected)
