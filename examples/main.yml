@@ -88,7 +88,7 @@ collectd_plugins_default_config:
     IgnoreSelected true
 
 #
-# Indention of Literal Blocks behind Lists
+# Indention of Literal Blocks behind Lists [[[1
 # -----------------------------------------
 #
 # Code will properly be indented after lists:

@@ -104,6 +104,9 @@ def convert(lines):
         elif line.startswith('# ') or line == '#':
             if state != STATE_TEXT:
                 yield ''
+            # Filter out [[[\d and ]]] at the end of a documentation line.
+            # Those sequences can be used for folding sections.
+            line = re.sub(r"\s*(:?\[{3}|\]{3})\d?$", "", line)
             line = last_text_line = line[2:]
             yield line
             last_indent = get_indent(line) * ' '
