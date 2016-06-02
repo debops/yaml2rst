@@ -53,14 +53,14 @@ class Test(TestCase):
             print(line, file=self._outfile)
         print(file=self._outfile)
 
-    def _test(self, text, expected):
+    def _test(self, text, expected, strip_regex=None):
         text = textwrap.dedent(text)
         if isinstance(expected, basestring):
             expected = textwrap.dedent(expected).splitlines()
         self._write_pattern(*expected)
-        res = list(yaml2rst.convert(text.splitlines()))
+        res = list(yaml2rst.convert(text.splitlines(), strip_regex))
         self.assertListEqual(expected, res)
-    
+
     def test_no_text_at_all(self):
         text = """\
         ---
@@ -265,3 +265,22 @@ class Test(TestCase):
              Some code under list-entry 2
         """
         self._test(text, expected)
+
+    def test_strip_regex(self):
+        text = """\
+        ---
+        # Heading [[[1
+        # =======
+        key: value
+        # ]]]
+        """
+        expected = """\
+        Heading
+        =======
+        ::
+
+          key: value
+
+
+        """
+        self._test(text, expected, '\s*(:?\[{3}|\]{3})\d?$')

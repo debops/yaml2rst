@@ -53,7 +53,7 @@ dist:
 examples: PYTHONPATH = .
 examples:
 	PYTHONPATH=.
-	bin/yaml2rst examples/main.yml examples/main.rst
+	bin/yaml2rst examples/main.yml examples/main.rst --strip-regex '\s*(:?\[{3}|\]{3})\d?$$'
 	rst2html --stylesheet=examples/demo.css examples/main.rst | grep --invert-match --fixed-strings '<meta name="generator"' > examples/main.html
 	rst2html --stylesheet=examples/demo.css tests/patternsTest.rst > tests/patternsTest.html
 

@@ -21,14 +21,19 @@ allows to process the YAML file directly without any pre-processing.
 
 Usage::
 
-  yaml2rst [-h] infile outfile
+  yaml2rst [-h] [--strip-regex regex] infile outfile
 
   positional arguments:
-    infile      YAML-file to read (`-` for stdin)
-    outfile     rst-file to write (`-` for stdout)
+    infile               YAML-file to read (`-` for stdin)
+    outfile              rst-file to write (`-` for stdout)
 
   optional arguments:
-    -h, --help  show this help message and exit
+    -h, --help           show this help message and exit
+    --strip-regex regex  Regex which will remove everything it matches. Can be
+                         used to remove fold markers from headings for example.
+                         Example to strip out [[[,]]] fold markers:
+                         '\s*(:?\[{3}|\]{3})\d?$'. Check the README for more
+                         details.
 
 
 How it works
@@ -42,6 +47,10 @@ and the "code" will get spaces prepended.
 Additionally at the start and at the end of a "code"-block, lines are
 added as required by reStructuredText. Also at the begin of a
 "code"-block, a ``::`` is added if required.
+
+``--strip-regex`` can be used to remove matching characters from text-lines
+when needed. Refer to documentation about
+`Folding marks support <docs/fold-markers.rst>`_ for details.
 
 
 Examples
