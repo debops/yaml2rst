@@ -70,13 +70,13 @@ def setup_patterns():
             format_key,
             re.escape(enum.formatinfo[format_key].prefix),
             pats['enum'],
-            re.escape(enum.formatinfo[format_key].suffix)
+            re.escape(enum.formatinfo[format_key].suffix),
         )
 
     patterns = {
-          'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
-          'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
-          }
+        'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
+        'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
+    }
     for name, pat in patterns.items():
         patterns[name] = re.compile(pat)
     return patterns
