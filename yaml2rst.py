@@ -65,13 +65,10 @@ def setup_patterns():
     pats['enum'] = ('(%(arabic)s|%(loweralpha)s|%(upperalpha)s|%(lowerroman)s'
                     '|%(upperroman)s|#)' % enum.sequencepats)
 
-    for format_key in enum.formats:
-        pats[format_key] = '(?P<{}>{}{}{})'.format(
-            format_key,
-            re.escape(enum.formatinfo[format_key].prefix),
-            pats['enum'],
-            re.escape(enum.formatinfo[format_key].suffix),
-        )
+    for format in enum.formats:
+        pats[format] = '(?P<%s>%s%s%s)' % (
+              format, re.escape(enum.formatinfo[format].prefix),
+              pats['enum'], re.escape(enum.formatinfo[format].suffix))
 
     patterns = {
         'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
