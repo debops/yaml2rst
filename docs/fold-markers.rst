@@ -92,12 +92,10 @@ Which fold marker to use
 
 Now a short hash up regarding which fold markers to use.
 
-* ``{{{`` is the Vim default. Has the disadvantage that it might gets in the way
+* ``{{{`` is the Vim default. Has the disadvantage that it might get in the way
   with your syntax highlighting. However, '{{{' is not expected to be usually
   found anywhere else in Ansible/YAML/Jinja.
 
 * ``(((`` is more likely to appear in Ansible/YAML/Jinja.
 
 * ``[[[`` is not expected to appear in Ansible/YAML/Jinja. Current recommendation.
-
-Refer to the `PR about fold markers support <https://github.com/htgoebel/yaml2rst/pull/3>`_ for more details.
