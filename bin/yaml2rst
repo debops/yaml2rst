@@ -31,6 +31,7 @@ import yaml2rst
 import argparse
 import sys
 
+
 def main(infilename, outfilename):
     if infilename == '-':
         infh = sys.stdin
@@ -51,4 +52,3 @@ parser.add_argument('outfilename', metavar='outfile',
                     help="rst-file to write (`-` for stdout)")
 args = parser.parse_args()
 main(**vars(args))
-

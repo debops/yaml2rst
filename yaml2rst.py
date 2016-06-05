@@ -44,17 +44,18 @@ def setup_patterns():
 
     enum = Struct()
     enum.formatinfo = {
-          'parens': Struct(prefix='(', suffix=')', start=1, end=-1),
-          'rparen': Struct(prefix='', suffix=')', start=0, end=-1),
-          'period': Struct(prefix='', suffix='.', start=0, end=-1)}
+        'parens': Struct(prefix='(', suffix=')', start=1, end=-1),
+        'rparen': Struct(prefix='', suffix=')', start=0, end=-1),
+        'period': Struct(prefix='', suffix='.', start=0, end=-1)}
     enum.formats = enum.formatinfo.keys()
     enum.sequences = ['arabic', 'loweralpha', 'upperalpha',
-                      'lowerroman', 'upperroman'] # ORDERED!
+                      'lowerroman', 'upperroman']  # ORDERED!
     enum.sequencepats = {'arabic': '[0-9]+',
                          'loweralpha': '[a-z]',
                          'upperalpha': '[A-Z]',
                          'lowerroman': '[ivxlcdm]+',
-                         'upperroman': '[IVXLCDM]+',}
+                         'upperroman': '[IVXLCDM]+',
+                         }
 
     pats = {}
     pats['nonalphanum7bit'] = '[!-/:-@[-`{-~]'
@@ -70,9 +71,9 @@ def setup_patterns():
               pats['enum'], re.escape(enum.formatinfo[format].suffix))
 
     patterns = {
-          'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
-          'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
-          }
+        'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
+        'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
+    }
     for name, pat in patterns.items():
         patterns[name] = re.compile(pat)
     return patterns
@@ -80,11 +81,13 @@ def setup_patterns():
 
 PATTERNS = setup_patterns()
 
+
 def get_indent(line):
     stripped_line = line.lstrip()
     indent = len(line) - len(stripped_line)
     if (PATTERNS['bullet'].match(stripped_line) or
-        PATTERNS['enumerator'].match(stripped_line)):
+            PATTERNS['enumerator'].match(stripped_line)):
+
         indent += len(stripped_line.split(None, 1)[0])+1
     return indent
 
@@ -103,7 +106,7 @@ def convert(lines):
                 yield ''
             line = last_text_line = line[2:]
             yield line
-            last_indent = get_indent(line)* ' '
+            last_indent = get_indent(line) * ' '
             state = STATE_TEXT
         elif line == '---':
             pass
@@ -117,9 +120,10 @@ def convert(lines):
             yield last_indent + '  ' + line
             state = STATE_YAML
 
+
 def convert_text(yaml_text):
     return '\n'.join(convert(yaml_text.splitlines()))
-    
+
 
 def convert_file(infilename, outfilename):
     with open(infilename) as infh:
