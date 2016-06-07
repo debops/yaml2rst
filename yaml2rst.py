@@ -92,7 +92,13 @@ def get_indent(line):
     return indent
 
 
-def convert(lines):
+def get_stripped_line(line, strip_regex):
+    if strip_regex:
+        line = re.sub(strip_regex, "", line)
+    return line
+
+
+def convert(lines, strip_regex):
     state = STATE_TEXT
     last_text_line = ''
     last_indent = ''
@@ -104,6 +110,7 @@ def convert(lines):
         elif line.startswith('# ') or line == '#':
             if state != STATE_TEXT:
                 yield ''
+            line = get_stripped_line(line, strip_regex)
             line = last_text_line = line[2:]
             yield line
             last_indent = get_indent(line) * ' '
