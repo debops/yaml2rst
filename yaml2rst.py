@@ -128,12 +128,12 @@ def convert(lines, strip_regex):
             state = STATE_YAML
 
 
-def convert_text(yaml_text):
-    return '\n'.join(convert(yaml_text.splitlines()))
+def convert_text(yaml_text, strip_regex=None):
+    return '\n'.join(convert(yaml_text.splitlines(), strip_regex))
 
 
-def convert_file(infilename, outfilename):
+def convert_file(infilename, outfilename, strip_regex=None):
     with open(infilename) as infh:
         with open(outfilename, "w") as outfh:
-            for l in convert(infh.readlines()):
+            for l in convert(infh.readlines(), strip_regex):
                 print(l.rstrip(), file=outfh)
