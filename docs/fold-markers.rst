@@ -51,7 +51,7 @@ So to use folds in your files, you basally have two options:
       #    :local:
 
       # First heading [[[
-      # -------------
+      # -----------------
 
       # .. envvar:: example__list
       #
@@ -63,7 +63,7 @@ So to use folds in your files, you basally have two options:
       # .. ]]]
 
       # Second heading [[[1
-      # --------------
+      # -------------------
       #
 
 Both variants have their pros and cons and both are supported by `yaml2rst`, so
