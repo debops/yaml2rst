@@ -32,7 +32,7 @@ import argparse
 import sys
 
 
-def main(infilename, outfilename, strip_regex):
+def main(infilename, outfilename, strip_regex, yaml_strip_regex):
     if infilename == '-':
         infh = sys.stdin
     else:
@@ -41,7 +41,7 @@ def main(infilename, outfilename, strip_regex):
         outfh = sys.stdout
     else:
         outfh = open(outfilename, "w")
-    for l in yaml2rst.convert(infh.readlines(), strip_regex):
+    for l in yaml2rst.convert(infh.readlines(), strip_regex, yaml_strip_regex):
         print(l.rstrip(), file=outfh)
 
 
@@ -55,5 +55,8 @@ parser.add_argument('--strip-regex', metavar='regex',
                     " Can be used to remove fold markers from headings for example."
                     " Example to strip out [[[,]]] fold markers: '\s*(:?\[{3}|\]{3})\d?$'."
                     " Check the README for more details.")
+parser.add_argument('--yaml-strip-regex', metavar='regex',
+                    help="Same usage as --strip-regex except that this regex substitution"
+                    "is preformed on the YAMl part of the file as opposed RST part.")
 args = parser.parse_args()
 main(**vars(args))

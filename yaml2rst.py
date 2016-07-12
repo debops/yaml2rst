@@ -98,7 +98,7 @@ def get_stripped_line(line, strip_regex):
     return line
 
 
-def convert(lines, strip_regex):
+def convert(lines, strip_regex, yaml_strip_regex):
     state = STATE_TEXT
     last_text_line = ''
     last_indent = ''
@@ -124,16 +124,17 @@ def convert(lines, strip_regex):
                 if not last_text_line.endswith('::'):
                     yield last_indent + '::'
                 yield ''
+            line = get_stripped_line(line, yaml_strip_regex)
             yield last_indent + '  ' + line
             state = STATE_YAML
 
 
-def convert_text(yaml_text, strip_regex=None):
-    return '\n'.join(convert(yaml_text.splitlines(), strip_regex))
+def convert_text(yaml_text, strip_regex=None, yaml_strip_regex=None):
+    return '\n'.join(convert(yaml_text.splitlines(), strip_regex, yaml_strip_regex))
 
 
-def convert_file(infilename, outfilename, strip_regex=None):
+def convert_file(infilename, outfilename, strip_regex=None, yaml_strip_regex=None):
     with open(infilename) as infh:
         with open(outfilename, "w") as outfh:
-            for l in convert(infh.readlines(), strip_regex):
+            for l in convert(infh.readlines(), strip_regex, yaml_strip_regex):
                 print(l.rstrip(), file=outfh)

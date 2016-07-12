@@ -18,7 +18,7 @@ Some text describing this boolean.
 
   example__enabled: True
 
-                                                                    # ]]]
+
 
 .. note:: example__packages
 
@@ -26,8 +26,8 @@ List of additional APT packages which will be installed by the role.
 ::
 
   example__packages: []
-                                                                    # ]]]
-                                                                    # ]]]
+
+
 
 Something
 -------------
@@ -38,9 +38,9 @@ Some text describing this list.
 ::
 
   example__periodic: []
-                                                                    # ]]]
-                                                                    # ]]]
-                                                                    # ]]]
+
+
+
 
 collectd
 ================
