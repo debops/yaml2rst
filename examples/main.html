@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>collectd</title>
+<title></title>
 <style type="text/css">
 
 /* Layout shamelessly ripped out from https://docs.python.org/2/ */
@@ -51,9 +51,60 @@ dt {
 </style>
 </head>
 <body>
-<div class="document" id="collectd">
-<h1 class="title">collectd</h1>
+<div class="document">
 
+
+<!-- File content redundant to ../docs/fold-markers.rst (inlined) -->
+<!-- vim: foldmarker=[[[,]]]:foldmethod=marker -->
+<div class="section" id="debops-example-default-variables">
+<h1>debops.example default variables</h1>
+<div class="contents local topic" id="sections">
+<p class="topic-title first">Sections</p>
+<ul class="simple">
+<li><a class="reference internal" href="#main-configuration" id="id1">Main configuration</a></li>
+<li><a class="reference internal" href="#something" id="id2">Something</a></li>
+</ul>
+</div>
+<div class="section" id="main-configuration">
+<h2><a class="toc-backref" href="#id1">Main configuration</a></h2>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">example__enabled</p>
+</div>
+<p>Some text describing this boolean.</p>
+<pre class="literal-block">
+example__enabled: True
+
+                                                                  # ]]]
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">example__packages</p>
+</div>
+<p>List of additional APT packages which will be installed by the role.</p>
+<pre class="literal-block">
+example__packages: []
+                                                                  # ]]]
+                                                                  # ]]]
+</pre>
+</div>
+<div class="section" id="something">
+<h2><a class="toc-backref" href="#id2">Something</a></h2>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">example__something</p>
+</div>
+<p>Some text describing this list.</p>
+<pre class="literal-block">
+example__periodic: []
+                                                                  # ]]]
+                                                                  # ]]]
+                                                                  # ]]]
+</pre>
+</div>
+</div>
+<div class="section" id="collectd">
+<h1>collectd</h1>
 <p>Set this to <tt class="docutils literal">true</tt> to install <cite>collectd</cite>:</p>
 <pre class="literal-block">
 collectd: false
@@ -112,7 +163,7 @@ disk: |
   Disk &quot;/hd[0-9]+/&quot;
 </pre>
 <div class="section" id="default-configuration">
-<h1>Default Configuration</h1>
+<h2>Default Configuration</h2>
 <p>The default configuration for each plugin is as follows</p>
 <pre class="literal-block">
 collectd_plugins_default_config:
@@ -140,7 +191,7 @@ interface: |
 </pre>
 </div>
 <div class="section" id="indention-of-literal-blocks-behind-lists">
-<h1>Indention of Literal Blocks behind Lists</h1>
+<h2>Indention of Literal Blocks behind Lists</h2>
 <p>Code will properly be indented after lists:</p>
 <ul>
 <li><p class="first">list-entry 1</p>
@@ -165,7 +216,7 @@ Some code under list-entry 2
 </pre>
 </div>
 <div class="section" id="formatting-as-definition-lists">
-<h1>Formatting as Definition Lists</h1>
+<h2>Formatting as Definition Lists</h2>
 <dl class="docutils">
 <dt>postfix_relayhost</dt>
 <dd><p class="first">Address of mail host this host should relay all mail to instead of
@@ -184,6 +235,7 @@ postfix_relayhost: False
 mode: rst
 ispell-local-dictionary: "american"
 End: -->
+</div>
 </div>
 </div>
 </body>

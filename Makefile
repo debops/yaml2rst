@@ -53,7 +53,8 @@ dist:
 examples: PYTHONPATH = .
 examples:
 	PYTHONPATH=.
-	bin/yaml2rst examples/main.yml examples/main.rst --strip-regex '\s*(:?\[{3}|\]{3})\d?$$'
+	sed --regexp-extended 's/(\.\. )envvar(::)/\1note\2/;' examples/fold-markers-debops.yml examples/main.yml | bin/yaml2rst - examples/main.rst --strip-regex '\s*(:?\[{3}|\]{3})\d?$$'
+	## --no-generator does not do the trick on Debian Jessie.
 	rst2html --stylesheet=examples/demo.css examples/main.rst | grep --invert-match --fixed-strings '<meta name="generator"' > examples/main.html
 	rst2html --stylesheet=examples/demo.css tests/patternsTest.rst > tests/patternsTest.html
 
