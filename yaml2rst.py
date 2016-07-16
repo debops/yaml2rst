@@ -98,7 +98,7 @@ def get_stripped_line(line, strip_regex):
     return line
 
 
-def convert(lines, strip_regex, yaml_strip_regex):
+def convert(lines, strip_regex=None, yaml_strip_regex=None):
     state = STATE_TEXT
     last_text_line = ''
     last_indent = ''
