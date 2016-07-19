@@ -50,12 +50,19 @@ dist:
 	rm -rf build
 	python setup.py sdist bdist
 
-examples: PYTHONPATH = .
-examples:
+examples: examples/main.rst examples/main.html tests/patternsTest.html
+
+examples/main.rst: examples/fold-markers-debops.yml examples/main.yml
 	PYTHONPATH=.
-	bin/yaml2rst examples/main.yml examples/main.rst --strip-regex '\s*(:?\[{3}|\]{3})\d?$$'
-	rst2html --stylesheet=examples/demo.css examples/main.rst | grep --invert-match --fixed-strings '<meta name="generator"' > examples/main.html
-	rst2html --stylesheet=examples/demo.css tests/patternsTest.rst > tests/patternsTest.html
+	sed --regexp-extended 's/(\.\. )envvar(::)/\1note\2/;' $? \
+		| bin/yaml2rst - "$@" --strip-regex '\s*(:?\[{3}|\]{3})\d?$$' --yaml-strip-regex '^\s{66,67}#\s\]{3}\d?$$'
+	## --no-generator does not do the trick on Debian Jessie.
+
+examples/main.html: examples/main.rst examples/demo.css
+	rst2html --stylesheet=examples/demo.css "$<" | grep --invert-match --fixed-strings '<meta name="generator"' > "$@"
+
+tests/patternsTest.html: tests/patternsTest.rst examples/demo.css
+	rst2html --stylesheet=examples/demo.css "$<" > "$@"
 
 #-- interaction with PyPI
 
