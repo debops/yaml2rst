@@ -55,7 +55,7 @@ class Test(TestCase):
 
     def _test(self, text, expected, strip_regex=None):
         text = textwrap.dedent(text)
-        if isinstance(expected, basestring):
+        if isinstance(expected, str):
             expected = textwrap.dedent(expected).splitlines()
         self._write_pattern(*expected)
         res = list(yaml2rst.convert(text.splitlines(), strip_regex))
