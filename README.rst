@@ -6,7 +6,7 @@ A Simple Tool and Python-Module for Documenting YAML Files
 --------------------------------------------------------------------------
 
 :Author:    Hartmut Goebel <h.goebel@crazy-compilers.com>
-:Copyright: 2015 by Hartmut Goebel
+:Copyright: 2015-2019 by Hartmut Goebel
 :Licence:   GNU General Public Licence v3 or later (GPLv3+)
 
 

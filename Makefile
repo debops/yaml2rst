@@ -2,7 +2,7 @@
 # This file is part of `yaml2rst`.
 # Based on prior work from `gitflow`
 #   Copyright (c) 2010-2011 Vincent Driessen
-#   Copyright (c) 2012-2015 Hartmut Goebel
+#   Copyright (c) 2012-2019 Hartmut Goebel
 # Distributed under a BSD-like license.
 #
 
