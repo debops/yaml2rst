@@ -23,7 +23,8 @@ yaml2rst – A Simple Tool for Documenting YML Files
 from __future__ import print_function
 
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2015-2019 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
+__copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
+                 "<h.goebel@crazy-compilers.com>")
 __licence__ = "GNU General Public License version 3 (GPL v3)"
 
 
@@ -51,12 +52,15 @@ parser.add_argument('infilename', metavar='infile',
 parser.add_argument('outfilename', metavar='outfile',
                     help="rst-file to write (`-` for stdout)")
 parser.add_argument('--strip-regex', metavar='regex',
-                    help="Regex which will remove everything it matches."
-                    " Can be used to remove fold markers from headings for example."
-                    " Example to strip out [[[,]]] fold markers: '\s*(:?\[{3}|\]{3})\d?$'."
-                    " Check the README for more details.")
+                    help=("Regex which will remove everything it matches. "
+                          "Can be used e.g. to remove fold markers from "
+                          "headings. "
+                          "Example to strip out [[[,]]] fold markers use: "
+                          r"'\s*(:?\[{3}|\]{3})\d?$'. "
+                          "Check the README for more details."))
 parser.add_argument('--yaml-strip-regex', metavar='regex',
-                    help="Same usage as --strip-regex except that this regex substitution"
-                    "is preformed on the YAMl part of the file as opposed RST part.")
+                    help=("Same usage as --strip-regex except that this "
+                          "regex substitution is preformed on the YAMl "
+                          "part of the file as opposed RST part."))
 args = parser.parse_args()
 main(**vars(args))

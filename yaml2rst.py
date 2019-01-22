@@ -24,7 +24,8 @@ from __future__ import print_function
 import re
 
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2015-2019 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
+__copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
+                 "<h.goebel@crazy-compilers.com>")
 __licence__ = "GNU General Public License version 3 (GPL v3)"
 __version__ = "0.3dev"
 
@@ -88,7 +89,7 @@ def get_indent(line):
     if (PATTERNS['bullet'].match(stripped_line) or
             PATTERNS['enumerator'].match(stripped_line)):
 
-        indent += len(stripped_line.split(None, 1)[0])+1
+        indent += len(stripped_line.split(None, 1)[0]) + 1
     return indent
 
 
@@ -130,10 +131,12 @@ def convert(lines, strip_regex=None, yaml_strip_regex=None):
 
 
 def convert_text(yaml_text, strip_regex=None, yaml_strip_regex=None):
-    return '\n'.join(convert(yaml_text.splitlines(), strip_regex, yaml_strip_regex))
+    return '\n'.join(convert(yaml_text.splitlines(),
+                             strip_regex, yaml_strip_regex))
 
 
-def convert_file(infilename, outfilename, strip_regex=None, yaml_strip_regex=None):
+def convert_file(infilename, outfilename,
+                 strip_regex=None, yaml_strip_regex=None):
     with open(infilename) as infh:
         with open(outfilename, "w") as outfh:
             for l in convert(infh.readlines(), strip_regex, yaml_strip_regex):

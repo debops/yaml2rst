@@ -19,7 +19,8 @@
 from __future__ import print_function
 
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2015-2019 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
+__copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
+                 "<h.goebel@crazy-compilers.com>")
 __licence__ = "GNU General Public License version 3 (GPL v3)"
 
 
@@ -29,6 +30,7 @@ import os
 import inspect
 
 import yaml2rst
+
 
 class Test(TestCase):
 
@@ -48,7 +50,7 @@ class Test(TestCase):
         """
         print(file=self._outfile)
         print(inspect.stack()[2][3], file=self._outfile)
-        print('='*60, file=self._outfile)
+        print('=' * 60, file=self._outfile)
         for line in lines:
             print(line, file=self._outfile)
         print(file=self._outfile)
@@ -69,14 +71,12 @@ class Test(TestCase):
         expected = ['::', '', '  key: value']
         self._test(text, expected)
 
-
     def test_only_text(self):
         text = """\
         # Some text
         """
         expected = ['Some text']
         self._test(text, expected)
-
 
     def test_some_text_behind(self):
         text = """\
@@ -169,7 +169,7 @@ class Test(TestCase):
 
         More code
         """
-        expected= """\
+        expected = """\
         ::
 
           this is code
@@ -177,7 +177,6 @@ class Test(TestCase):
           More code
         """
         self._test(text, expected)
-
 
     def test_more_indent(self):
         text = """\
@@ -187,7 +186,7 @@ class Test(TestCase):
         # - list-entry 2
         Some code under list-entry 2
         """
-        expected= """\
+        expected = """\
         Some text
 
         - list-entry 1
@@ -198,7 +197,6 @@ class Test(TestCase):
         """
         self._test(text, expected)
 
-
     def test_more_indent_enumeration(self):
         text = """\
         # Some text
@@ -207,7 +205,7 @@ class Test(TestCase):
         # 2. list-entry 2
         Some code under list-entry 2
         """
-        expected= """\
+        expected = """\
         Some text
 
         1. list-entry 1
@@ -228,7 +226,7 @@ class Test(TestCase):
         # ::
         Some code at outer level
         """
-        expected= """\
+        expected = """\
         Some text
 
         - list-entry 1
@@ -252,7 +250,7 @@ class Test(TestCase):
 
         Some code under list-entry 2
         """
-        expected= """\
+        expected = """\
         Some text
 
         1. list-entry 1
@@ -283,4 +281,4 @@ class Test(TestCase):
 
 
         """
-        self._test(text, expected, '\s*(:?\[{3}|\]{3})\d?$')
+        self._test(text, expected, r'\s*(:?\[{3}|\]{3})\d?$')
