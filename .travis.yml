@@ -11,4 +11,6 @@ before_install:
 install:
   - python -m pip install -U -r requirements.txt | cat
   - pip install .
-script: pytest
+script:
+  - pytest
+  - flake8 . bin/yaml2rst
