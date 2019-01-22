@@ -60,6 +60,14 @@ You can find example yaml-input, rst-output and generated html in the
 examples directory. You may also view the generated html online at
 https://rawgit.com/htgoebel/yaml2rst/develop/examples/main.html.
 
+
+Related Tools
+---------------------
+
+* `yaml4rst <https://pypi.org/project/yaml4rst/>`_ is a
+  linting/checking/reformatting tool for YAML files documented with
+  inline RST which goes hand in hand with yaml2rst.
+
 ..
  Local Variables:
  mode: rst
