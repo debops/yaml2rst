@@ -6,7 +6,7 @@ A Simple Tool and Python-Module for Documenting YAML Files
 --------------------------------------------------------------------------
 
 :Author:    Hartmut Goebel <h.goebel@crazy-compilers.com>
-:Copyright: 2015 by Hartmut Goebel
+:Copyright: 2015-2019 by Hartmut Goebel
 :Licence:   GNU General Public Licence v3 or later (GPLv3+)
 
 
@@ -21,14 +21,19 @@ allows to process the YAML file directly without any pre-processing.
 
 Usage::
 
-  yaml2rst [-h] infile outfile
+  yaml2rst [-h] [--strip-regex regex] infile outfile
 
   positional arguments:
-    infile      YAML-file to read (`-` for stdin)
-    outfile     rst-file to write (`-` for stdout)
+    infile               YAML-file to read (`-` for stdin)
+    outfile              rst-file to write (`-` for stdout)
 
   optional arguments:
-    -h, --help  show this help message and exit
+    -h, --help           show this help message and exit
+    --strip-regex regex  Regex which will remove everything it matches. Can be
+                         used to remove fold markers from headings for example.
+                         Example to strip out [[[,]]] fold markers:
+                         '\s*(:?\[{3}|\]{3})\d?$'. Check the README for more
+                         details.
 
 
 How it works
@@ -43,13 +48,34 @@ Additionally at the start and at the end of a "code"-block, lines are
 added as required by reStructuredText. Also at the begin of a
 "code"-block, a ``::`` is added if required.
 
+``--strip-regex`` can be used to remove matching characters from text-lines
+when needed. Refer to documentation about
+`Folding marks support <docs/fold-markers.rst>`_ for details.
+
 
 Examples
 -------------
 
 You can find example yaml-input, rst-output and generated html in the
 examples directory. You may also view the generated html online at
-https://rawgit.com/htgoebel/yaml2rst/develop/examples/main.html.
+https://rawgit.com/debops/yaml2rst/develop/examples/main.html.
+
+
+Related Tools
+---------------------
+
+* `yaml4rst <https://pypi.org/project/yaml4rst/>`_ is a
+  linting/checking/reformatting tool for YAML files documented with
+  inline RST which goes hand in hand with yaml2rst.
+
+
+Maintainers
+---------------------
+
+`yaml2rst` was originally developed 2015 and maintained by Hartmut
+Goebel. In 2019 the project moved to the `debops` project for which
+`yaml2rst` was developed.
+
 
 ..
  Local Variables:

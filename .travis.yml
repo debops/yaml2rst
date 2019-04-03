@@ -1,0 +1,16 @@
+language: python
+dist: xenial
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+before_install:
+  - python -m pip install -U pip setuptools | cat
+install:
+  - python -m pip install -U -r requirements.txt | cat
+  - pip install .
+script:
+  - pytest
+  - flake8

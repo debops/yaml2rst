@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>
+# Copyright 2015-2019 by Hartmut Goebel <h.goebel@crazy-compilers.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,8 @@
 from __future__ import print_function
 
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
+__copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
+                 "<h.goebel@crazy-compilers.com>")
 __licence__ = "GNU General Public License version 3 (GPL v3)"
 
 
@@ -29,6 +30,7 @@ import os
 import inspect
 
 import yaml2rst
+
 
 class Test(TestCase):
 
@@ -48,19 +50,19 @@ class Test(TestCase):
         """
         print(file=self._outfile)
         print(inspect.stack()[2][3], file=self._outfile)
-        print('='*60, file=self._outfile)
+        print('=' * 60, file=self._outfile)
         for line in lines:
             print(line, file=self._outfile)
         print(file=self._outfile)
 
-    def _test(self, text, expected):
+    def _test(self, text, expected, strip_regex=None):
         text = textwrap.dedent(text)
-        if isinstance(expected, basestring):
+        if isinstance(expected, str):
             expected = textwrap.dedent(expected).splitlines()
         self._write_pattern(*expected)
-        res = list(yaml2rst.convert(text.splitlines()))
+        res = list(yaml2rst.convert(text.splitlines(), strip_regex))
         self.assertListEqual(expected, res)
-    
+
     def test_no_text_at_all(self):
         text = """\
         ---
@@ -69,14 +71,12 @@ class Test(TestCase):
         expected = ['::', '', '  key: value']
         self._test(text, expected)
 
-
     def test_only_text(self):
         text = """\
         # Some text
         """
         expected = ['Some text']
         self._test(text, expected)
-
 
     def test_some_text_behind(self):
         text = """\
@@ -169,7 +169,7 @@ class Test(TestCase):
 
         More code
         """
-        expected= """\
+        expected = """\
         ::
 
           this is code
@@ -177,7 +177,6 @@ class Test(TestCase):
           More code
         """
         self._test(text, expected)
-
 
     def test_more_indent(self):
         text = """\
@@ -187,7 +186,7 @@ class Test(TestCase):
         # - list-entry 2
         Some code under list-entry 2
         """
-        expected= """\
+        expected = """\
         Some text
 
         - list-entry 1
@@ -198,6 +197,24 @@ class Test(TestCase):
         """
         self._test(text, expected)
 
+    def test_more_indent_enumeration(self):
+        text = """\
+        # Some text
+        #
+        # 1. list-entry 1
+        # 2. list-entry 2
+        Some code under list-entry 2
+        """
+        expected = """\
+        Some text
+
+        1. list-entry 1
+        2. list-entry 2
+           ::
+
+             Some code under list-entry 2
+        """
+        self._test(text, expected)
 
     def test_no_more_indent(self):
         text = """\
@@ -209,7 +226,7 @@ class Test(TestCase):
         # ::
         Some code at outer level
         """
-        expected= """\
+        expected = """\
         Some text
 
         - list-entry 1
@@ -220,3 +237,48 @@ class Test(TestCase):
           Some code at outer level
         """
         self._test(text, expected)
+
+    def test_nested_enumeration(self):
+        # Check if unindenting works as expected.
+        text = """\
+        # Some text
+        #
+        # 1. list-entry 1
+        #    a. list-entry 1.a
+        #    b. list-entry 1.b
+        # 2. list-entry 2
+
+        Some code under list-entry 2
+        """
+        expected = """\
+        Some text
+
+        1. list-entry 1
+           a. list-entry 1.a
+           b. list-entry 1.b
+        2. list-entry 2
+
+           ::
+
+             Some code under list-entry 2
+        """
+        self._test(text, expected)
+
+    def test_strip_regex(self):
+        text = """\
+        ---
+        # Heading [[[1
+        # =======
+        key: value
+        # ]]]
+        """
+        expected = """\
+        Heading
+        =======
+        ::
+
+          key: value
+
+
+        """
+        self._test(text, expected, r'\s*(:?\[{3}|\]{3})\d?$')

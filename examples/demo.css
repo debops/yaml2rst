@@ -35,3 +35,7 @@ tt {
     font-size: 0.95em;
     padding: 0 1px;
 }
+
+dt {
+    font-weight: bold;
+}

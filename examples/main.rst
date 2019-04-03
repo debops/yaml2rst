@@ -1,3 +1,47 @@
+.. File content redundant to ../docs/fold-markers.rst (inlined)
+.. vim: foldmarker=[[[,]]]:foldmethod=marker
+
+debops.example default variables
+====================================
+
+.. contents:: Sections
+   :local:
+
+
+Main configuration
+----------------------
+
+.. note:: example__enabled
+
+Some text describing this boolean.
+::
+
+  example__enabled: True
+
+
+
+.. note:: example__packages
+
+List of additional APT packages which will be installed by the role.
+::
+
+  example__packages: []
+
+
+
+Something
+-------------
+
+.. note:: example__something
+
+Some text describing this list.
+::
+
+  example__periodic: []
+
+
+
+
 collectd
 ================
 
@@ -126,6 +170,25 @@ an empty line in front of that.
 ::
 
   Some code under list-entry 2
+
+
+
+Formatting as Definition Lists
+-----------------------------------------
+
+
+postfix_relayhost
+   Address of mail host this host should relay all mail to instead of
+   delivering it directly. (Automatic configuration)
+
+   This allows multiple paragraphs, too.
+
+   a) and list items 1
+   b) and list items 2
+
+   ::
+
+     postfix_relayhost: False
 
 
 

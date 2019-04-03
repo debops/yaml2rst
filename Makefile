@@ -2,7 +2,7 @@
 # This file is part of `yaml2rst`.
 # Based on prior work from `gitflow`
 #   Copyright (c) 2010-2011 Vincent Driessen
-#   Copyright (c) 2012-2015 Hartmut Goebel
+#   Copyright (c) 2012-2019 Hartmut Goebel
 # Distributed under a BSD-like license.
 #
 
@@ -40,29 +40,38 @@ cover:
 	nosetests --with-coverage3 --cover-package=gitflow --with-spec --spec-color
 
 dump-requirements:
-	pip freeze -l > .requirements
+	pip freeze -l > requirements.txt
 
 install-requirements:
-	pip install -r .requirements
+	pip install -r requirements.txt
 
 dist:
-#	ensure a clean build
+	@# ensure a clean build
 	rm -rf build
-	python setup.py sdist bdist
+	python setup.py sdist bdist_wheel
 
-examples: PYTHONPATH = .
-examples:
+examples: examples/main.rst examples/main.html tests/patternsTest.html
+
+examples/main.rst: examples/fold-markers-debops.yml examples/main.yml
 	PYTHONPATH=.
-	bin/yaml2rst examples/main.yml examples/main.rst
-	rst2html --stylesheet=examples/demo.css examples/main.rst > examples/main.html
-	rst2html --stylesheet=examples/demo.css tests/patternsTest.rst > tests/patternsTest.html
+	sed --regexp-extended 's/(\.\. )envvar(::)/\1note\2/;' $? \
+		| bin/yaml2rst - "$@" --strip-regex '\s*(:?\[{3}|\]{3})\d?$$' --yaml-strip-regex '^\s{66,67}#\s\]{3}\d?$$'
+	## --no-generator does not do the trick on Debian Jessie.
+
+examples/main.html: examples/main.rst examples/demo.css
+	rst2html --stylesheet=examples/demo.css "$<" | grep --invert-match --fixed-strings '<meta name="generator"' > "$@"
+
+tests/patternsTest.html: tests/patternsTest.rst examples/demo.css
+	rst2html --stylesheet=examples/demo.css "$<" > "$@"
 
 #-- interaction with PyPI
 
-test-upload:
-	python ./setup.py register -r https://testpypi.python.org/pypi
-	python ./setup.py sdist upload -r https://testpypi.python.org/pypi
+test-upload: dist
+	twine upload --sign -r https://testpypi.python.org/pypi
 
 test-install:
 	virtualenv /tmp/test-yaml2rst
 	/tmp/test-yaml2rst/bin/pip install -i https://testpypi.python.org/pypi yaml2rst
+
+upload: dist
+	twine upload --sign

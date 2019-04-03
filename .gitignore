@@ -45,6 +45,8 @@
 *.egg-link
 
 /nosetests.xml
+/.cache
+/.pytest_cache
 /.coverage
 /.tox
 /.achievements

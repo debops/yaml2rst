@@ -3,7 +3,7 @@
 yaml2rst – A Simple Tool for Documenting YAML Files
 """
 #
-# Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>
+# Copyright 2015-2019 by Hartmut Goebel <h.goebel@crazy-compilers.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,9 +24,10 @@ from __future__ import print_function
 import re
 
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2015 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
+__copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
+                 "<h.goebel@crazy-compilers.com>")
 __licence__ = "GNU General Public License version 3 (GPL v3)"
-__version__ = "0.2"
+__version__ = '0.3'
 
 STATE_TEXT = 0
 STATE_YAML = 1
@@ -44,17 +45,18 @@ def setup_patterns():
 
     enum = Struct()
     enum.formatinfo = {
-          'parens': Struct(prefix='(', suffix=')', start=1, end=-1),
-          'rparen': Struct(prefix='', suffix=')', start=0, end=-1),
-          'period': Struct(prefix='', suffix='.', start=0, end=-1)}
+        'parens': Struct(prefix='(', suffix=')', start=1, end=-1),
+        'rparen': Struct(prefix='', suffix=')', start=0, end=-1),
+        'period': Struct(prefix='', suffix='.', start=0, end=-1)}
     enum.formats = enum.formatinfo.keys()
     enum.sequences = ['arabic', 'loweralpha', 'upperalpha',
-                      'lowerroman', 'upperroman'] # ORDERED!
+                      'lowerroman', 'upperroman']  # ORDERED!
     enum.sequencepats = {'arabic': '[0-9]+',
                          'loweralpha': '[a-z]',
                          'upperalpha': '[A-Z]',
                          'lowerroman': '[ivxlcdm]+',
-                         'upperroman': '[IVXLCDM]+',}
+                         'upperroman': '[IVXLCDM]+',
+                         }
 
     pats = {}
     pats['nonalphanum7bit'] = '[!-/:-@[-`{-~]'
@@ -70,9 +72,9 @@ def setup_patterns():
               pats['enum'], re.escape(enum.formatinfo[format].suffix))
 
     patterns = {
-          'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
-          'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
-          }
+        'bullet': u'[-+*\u2022\u2023\u2043]( +|$)',
+        'enumerator': r'(%(parens)s|%(rparen)s|%(period)s)( +|$)' % pats,
+    }
     for name, pat in patterns.items():
         patterns[name] = re.compile(pat)
     return patterns
@@ -80,16 +82,24 @@ def setup_patterns():
 
 PATTERNS = setup_patterns()
 
+
 def get_indent(line):
     stripped_line = line.lstrip()
     indent = len(line) - len(stripped_line)
     if (PATTERNS['bullet'].match(stripped_line) or
-        PATTERNS['enumerator'].match(stripped_line)):
-        indent += len(stripped_line.split(None, 1)[0])+1
+            PATTERNS['enumerator'].match(stripped_line)):
+
+        indent += len(stripped_line.split(None, 1)[0]) + 1
     return indent
 
 
-def convert(lines):
+def get_stripped_line(line, strip_regex):
+    if strip_regex:
+        line = re.sub(strip_regex, "", line)
+    return line
+
+
+def convert(lines, strip_regex=None, yaml_strip_regex=None):
     state = STATE_TEXT
     last_text_line = ''
     last_indent = ''
@@ -101,9 +111,10 @@ def convert(lines):
         elif line.startswith('# ') or line == '#':
             if state != STATE_TEXT:
                 yield ''
+            line = get_stripped_line(line, strip_regex)
             line = last_text_line = line[2:]
             yield line
-            last_indent = get_indent(line)* ' '
+            last_indent = get_indent(line) * ' '
             state = STATE_TEXT
         elif line == '---':
             pass
@@ -114,15 +125,19 @@ def convert(lines):
                 if not last_text_line.endswith('::'):
                     yield last_indent + '::'
                 yield ''
+            line = get_stripped_line(line, yaml_strip_regex)
             yield last_indent + '  ' + line
             state = STATE_YAML
 
-def convert_text(yaml_text):
-    return '\n'.join(convert(yaml_text.splitlines()))
-    
 
-def convert_file(infilename, outfilename):
+def convert_text(yaml_text, strip_regex=None, yaml_strip_regex=None):
+    return '\n'.join(convert(yaml_text.splitlines(),
+                             strip_regex, yaml_strip_regex))
+
+
+def convert_file(infilename, outfilename,
+                 strip_regex=None, yaml_strip_regex=None):
     with open(infilename) as infh:
         with open(outfilename, "w") as outfh:
-            for l in convert(infh.readlines()):
+            for l in convert(infh.readlines(), strip_regex, yaml_strip_regex):
                 print(l.rstrip(), file=outfh)
