@@ -1,6 +1,12 @@
 Changelog for yaml2rst
 =========================
 
+0.4 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 0.3 (2019-04-03)
 ----------------
 
