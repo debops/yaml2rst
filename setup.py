@@ -17,11 +17,11 @@ setup(
     author_email='h.goebel@crazy-compilers.com',
     license="GPLv3+",
     packages=['yaml2rst'],
-    url="https://github.com/htgoebel/yaml2rst",
+    url="https://github.com/debops/yaml2rst",
     # These are for reference only, pip is not able to download packages
     # from github because the archives do not include the project-name.
-    download_url="https://github.com/htgoebel/yaml2rst/releases",
-    bugtrack_url="https://github.com/htgoebel/yaml2rst/issues",
+    download_url="https://github.com/debops/yaml2rst/releases",
+    bugtrack_url="https://github.com/debops/yaml2rst/issues",
     keywords=['YML', 'YAML',
               'rst', 'reStructuresText',
               'literate programming'],
