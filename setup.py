@@ -16,8 +16,7 @@ setup(
     author="Hartmut Goebel",
     author_email='h.goebel@crazy-compilers.com',
     license="GPLv3+",
-    py_modules=['yaml2rst'],
-    scripts=['bin/yaml2rst'],
+    packages=['yaml2rst'],
     url="https://github.com/htgoebel/yaml2rst",
     # These are for reference only, pip is not able to download packages
     # from github because the archives do not include the project-name.
@@ -26,6 +25,11 @@ setup(
     keywords=['YML', 'YAML',
               'rst', 'reStructuresText',
               'literate programming'],
+    entry_points={
+        'console_scripts': [
+            'yaml2rst = yaml2rst.__main__:run',
+        ]
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
