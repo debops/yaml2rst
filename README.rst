@@ -68,6 +68,15 @@ Related Tools
   linting/checking/reformatting tool for YAML files documented with
   inline RST which goes hand in hand with yaml2rst.
 
+
+Maintainers
+---------------------
+
+`yaml2rst` was originally developed 2015 and maintained by Hartmut
+Goebel. In 2019 the project moved to the `debops` project for which
+`yaml2rst` was developed.
+
+
 ..
  Local Variables:
  mode: rst
