@@ -1,0 +1,6 @@
+# dummy MANIFEST.in to keep zest.releaser calm
+# unused since the source is in a git repository
+#
+#recursive-include docs *
+#include *
+global-exclude *.pyc
