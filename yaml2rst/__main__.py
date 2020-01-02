@@ -25,7 +25,7 @@ from __future__ import print_function
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
                  "<h.goebel@crazy-compilers.com>")
-__licence__ = "GNU General Public License version 3 (GPL v3)"
+__licence__ = "GNU General Public License version 3 or later (GPLv3+)"
 
 import argparse
 import sys

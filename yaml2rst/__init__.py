@@ -26,7 +26,7 @@ import re
 __author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
 __copyright__ = ("Copyright 2015-2019 by Hartmut Goebel "
                  "<h.goebel@crazy-compilers.com>")
-__licence__ = "GNU General Public License version 3 (GPL v3)"
+__licence__ = "GNU General Public License version 3 or later (GPLv3+)"
 __version__ = '0.4.dev0'
 
 STATE_TEXT = 0
