@@ -19,6 +19,8 @@ yaml2rst – A Simple Tool for Documenting YML Files
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 
 from __future__ import print_function
 
